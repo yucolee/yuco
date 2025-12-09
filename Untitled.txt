@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>藏王 SB Trip Planner (2026/02)</title>
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --border-color: #e9ecef;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--bg-color);
+            color: #343a3f;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+        .tab-button {
+            background-color: transparent;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+            transition: all 0.3s ease;
+            margin-bottom: -2px; /* To align with border-bottom */
+            border-bottom: 2px solid transparent;
+        }
+        .tab-button.active {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+        .tab-content {
+            display: none;
+            padding: 20px 0;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            border-left: 5px solid var(--primary-color);
+        }
+        .card h2 {
+            margin-top: 0;
+            color: #495057;
+            font-size: 1.5rem;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .card ul li {
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .note {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 15px;
+            border-left: 5px solid #ffc107;
+        }
+        .completed {
+            text-decoration: line-through;
+            color: var(--secondary-color);
+        }
+        .highlight {
+            font-weight: bold;
+            color: #dc3545;
+        }
+        @media (max-width: 768px) {
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🇯🇵 藏王 SB Trip Planner (21-28/2/2026)</h1>
+
+        <div class="tabs">
+            <button class="tab-button active" data-tab="flights">✈️ Flights</button>
+            <button class="tab-button" data-tab="lodging">🏨 Accommodation</button>
+            <button class="tab-button" data-tab="car">🚗 Car & Transport</button>
+            <button class="tab-button" data-tab="activities">🏂 Activities & Sightseeing</button>
+            <button class="tab-button" data-tab="todo">✅ To-Do & Notes</button>
+        </div>
+
+        <div id="flights" class="tab-content active">
+            <div class="card-grid">
+                <div class="card">
+                    <h2>Outbound Flight: HKG to Sendai</h2>
+                    <ul>
+                        <li>Airline: HK Express</li>
+                        <li>Date: <span class="highlight">Saturday, 21/2/2026</span></li>
+                        <li>Route/Time: <span class="highlight">09:00 - 14:00</span></li>
+                        <li>Flight No.: UO890</li>
+                        <li>Baggage: Carry on + Hand luggage = 7kg</li>
+                        <li>Checked Bag: 32kg (Max Package)</li>
+                        <li>Status: Settled</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h2>Return Flight: Sendai to HKG</h2>
+                    <ul>
+                        <li>Airline: HK Express</li>
+                        <li>Date: <span class="highlight">Saturday, 28/2/2026</span></li>
+                        <li>Route/Time: <span class="highlight">14:55 - 19:30</span></li>
+                        <li>Flight No.: UO891</li>
+                        <li>Baggage: Carry on + Hand luggage = 7kg</li>
+                        <li>Checked Bag: 32kg (Max Package)</li>
+                        <li>Cost: $3005</li>
+                    </ul>
+                </div>
+                <div class="card" style="border-left: 5px solid var(--secondary-color);">
+                    <h2>Alternative Flight Option (GBA)</h2>
+                    <ul>
+                        <li>Date: 21/2 (Sat) - 28/2 (Sat)</li>
+                        <li>Outbound: 10:05 - 15:20, HB360</li>
+                        <li>Return: 16:20 - 20:50, HB361</li>
+                        <li>Checked Bag: 20kg</li>
+                        <li>Cost: $2490</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="lodging" class="tab-content">
+            <div class="card-grid">
+                <div class="card">
+                    <h2>Main Hotel: Onsen & Stay OAKHILL</h2>
+                    <ul>
+                        <li>Dates: <span class="highlight">21 Feb - 27 Feb (6 Nights)</span></li>
+                        <li>Arrangement: 4 people, 1 room preferred</li>
+                        <li>Amenities: Onsen bath, Free WiFi, Free private parking, No shared toilet.</li>
+                        <li>Proximity: 700m from Zao Onsen Ski Resort.</li>
+                        <li>Address: 〒990-2301, 756 ZAOONSEN, YAMAGATA</li>
+                        <li>Contact: TEL +81-23-694-2110, Mail oakhill@zao.co.jp</li>
+                        <li>Reservation No.: 6689224381</li>
+                        <li>PIN/Check-in Code: 4229 / 18986578</li>
+                        <li>Total Cost: $32690.8</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h2>Airport Hotel: Super Hotel Mitazono</h2>
+                    <ul>
+                        <li>Dates: <span class="highlight">27 Feb - 28 Feb (1 Night)</span></li>
+                        <li>Location: Near Sendai Airport</li>
+                        <li>Arrangement: 4 people, 2 rooms</li>
+                        <li>Amenities: Free parking, Includes breakfast.</li>
+                        <li>Check-in/out: 3pm check in, 10am check out</li>
+                        <li>Address: Mitazono 2-1-11, Natori, Japan, 981-1217</li>
+                        <li>Total Cost: $1128.58</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="car" class="tab-content">
+            <div class="card-grid">
+                <div class="card">
+                    <h2>Car Rental Details</h2>
+                    <ul>
+                        <li>Booking Ref: 202502535063</li>
+                        <li>Pick up: <span class="highlight">21/2 @ 15:00</span></li>
+                        <li>Return: <span class="highlight">28/2 @ 12:00</span></li>
+                        <li>Total Cost (JPY): ¥138,567 (Taxes Incl.)</li>
+                        <li>Base Fee: ¥94,870</li>
+                        <li>Insurance: ¥16,100</li>
+                        <li>Optional Equipment: ¥15,000</li>
+                    </ul>
+                </div>
+                <div class="card" style="border-left: 5px solid #ffc107;">
+                    <h2>Transport Notes</h2>
+                    <ul>
+                        <li>**Zao SBS Class Location:** Sports Club MONZA is a 15 min walk from the main hotel, suggesting a car is needed.</li>
+                        <li>**Ginzan Onsen:** Must park at Taisho Roman Kan (大正浪漫館) and take a shuttle bus (¥500/day).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="activities" class="tab-content">
+            <div class="card-grid">
+                <div class="card">
+                    <h2>Snowboarding Class (Zao SBS)</h2>
+                    <ul>
+                        <li>Date: <span class="highlight">February 22, 2026</span></li>
+                        <li>Meet-up: Sports Club MONZA reception desk</li>
+                        <li>Time: <span class="highlight">Until 9:20 AM</span></li>
+                        <li>Payment: Total ¥95,000, **Pay in cash upon arrival**</li>
+                        <li>Contact: s.arai@zaosbs.com</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h2>Sightseeing: 藏王樹冰 (Zao Snow Monsters)</h2>
+                    <ul>
+                        <li>Method: Use the Zao Ropeway.</li>
+                        <li>Route: Zao Sanroku -> Juhyo Kogen -> Jizo Sancho.</li>
+                        <li>Feature: Yamagata Zao offers **night light-up until 9 pm**.</li>
+                        <li>Activities: Can ski while viewing, or ride a snow vehicle.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h2>Sightseeing: 藏王狐狸村 (Fox Village)</h2>
+                    <ul>
+                        <li>Dates/Times (Winter): Dec 1 - Mar 15, <span class="highlight">9:00 - 16:00</span></li>
+                        <li>Last Admission: 15:30</li>
+                        <li>Cost: 1500 yen per person</li>
+                        <li>Notes: **Cash only**, Closed on Wednesday.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h2>Onsen Options</h2>
+                    <ul>
+                        <li>**蔵王温泉 大露天風呂:** 800 yen pp</li>
+                        <li>**蔵王温泉 源七露天の湯:** 600 yen pp</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="todo" class="tab-content">
+            <div class="card-grid">
+                <div class="card" style="border-left: 5px solid #28a745;">
+                    <h2>✅ Completed Tasks (Slide 2)</h2>
+                    <ul>
+                        <li class="completed">Flight</li>
+                        <li class="completed">Hotel 21-27</li>
+                        <li class="completed">Hotel 27-28</li>
+                        <li class="completed">Car rental</li>
+                        <li class="completed">SB class - booked</li>
+                    </ul>
+                </div>
+                <div class="card" style="border-left: 5px solid #dc3545;">
+                    <h2>⚠️ Remaining To-Do (Slide 2 & 20)</h2>
+                    <ul>
+                        <li>Gear rental (Ski gear)</li>
+                        <li>Lift pass - buy on the spot</li>
+                        <li>Places want to go (Sightseeing day planning)</li>
+                        <li>Travel insurance</li>
+                        <li>SIM card</li>
+                    </ul>
+                </div>
+                <div class="card" style="border-left: 5px solid #ffc107;">
+                    <h2>🏂 Gear Rental Notes (Slide 19)</h2>
+                    <ul>
+                        <li>**Rent:** Snowboard (SB), shoes, helmet</li>
+                        <li>**Bring your own:** goggles, inner clothes, socks for SB shoes, snow boots, knee and butt protector</li>
+                        <li>Ski gear rental is a 2-minute walk from the main accommodation area.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll('.tab-button');
+            const contents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Deactivate all
+                    tabs.forEach(t => t.classList.remove('active'));
+                    contents.forEach(c => c.classList.remove('active'));
+
+                    // Activate selected
+                    tab.classList.add('active');
+                    const targetId = tab.getAttribute('data-tab');
+                    document.getElementById(targetId).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
