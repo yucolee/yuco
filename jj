@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🇯🇵 藏王 SNOWBOARD (21-28/2/2026)🏂</title>
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --border-color: #e9ecef;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #343a3f;
+            
+            /* --- ZAO RESORT BACKGROUND IMAGE --- */
+            /* NOTE: Replace this with a real image URL for the background to show */
+            background-image: url('http://googleusercontent.com/image_generation_content/zao_juhyo_ski_resort_background');
+            background-size: cover; 
+            background-position: center; 
+            background-attachment: fixed; 
+        }
+        .container {
+            max-width: 1200px; /* Max desktop width */
+            margin: auto;
+            background-color: rgba(255, 255, 255, 0.9); 
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+        
+        /* --- DESKTOP/DEFAULT (Vertical Tabs) --- */
+        .main-content-area {
+            display: flex;
+            min-height: 70vh; 
+        }
+        .tabs {
+            display: flex;
+            flex-direction: column;
+            width: 200px;
+            border-right: 2px solid var(--border-color);
+            padding-right: 15px;
+            flex-shrink: 0; 
+            overflow-x: hidden; 
+        }
+        .tab-button {
+            background-color: transparent;
+            border: none;
+            padding: 10px 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+            transition: all 0.3s ease;
+            text-align: left;
+            margin-bottom: 5px;
+            border-left: 3px solid transparent; 
+        }
+        .tab-button:hover {
+            background-color: #e9ecef;
+        }
+        .tab-button.active {
+            color: var(--primary-color);
+            background-color: var(--bg-color);
+            border-left: 3px solid var(--primary-color);
+        }
+        .content-area {
+            flex-grow: 1;
+            padding-left: 20px;
+            overflow-y: auto; 
+            max-height: 70vh;
+        }
+
+        /* --- Schedule Cards (Desktop/Mobile) --- */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .schedule-card {
+            background-color: rgba(255, 255, 255, 0.95); 
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            border-left: 5px solid var(--primary-color);
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column; 
+        }
+        .schedule-card h2 {
+            margin-top: 0;
+            color: #495057;
+            font-size: 1.3rem;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+        }
+        /* New wrapper for content + map side-by-side */
+        .card-content-wrapper {
+            display: flex; 
+            gap: 15px;
+            align-items: flex-start;
+        }
+        .schedule-card ul {
+            list-style: none;
+            padding: 0;
+            flex-grow: 1; 
+            flex-basis: 60%; 
+        }
+        .schedule-card ul li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        .schedule-card ul li a {
+            color: var(--primary-color);
+            text-decoration: underline;
+            font-weight: 500;
+            margin-left: 5px;
+        }
+        .highlight {
+            font-weight: bold;
+            color: var(--danger-color);
+        }
+        
+        /* Map Preview (Right Side) */
+        .map-preview-container {
+            flex-grow: 1; 
+            flex-basis: 40%; 
+            text-align: right; 
+            align-self: center; 
+        }
+        .map-preview-container img {
+            width: 100%;
+            max-width: 400px; 
+            height: 120px; 
+            object-fit: cover;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: block;
+            margin-left: auto; 
+        }
+
+        /* --- Expense Tracker Styles (Desktop/Mobile) --- */
+        .expense-form, .settlement-summary {
+            background-color: rgba(255, 255, 255, 0.95); 
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        .expense-form input, .expense-form select {
+            width: calc(100% / 5 - 10px); 
+            padding: 10px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-sizing: border-box;
+            display: inline-block;
+        }
+        .expense-form button {
+            background-color: var(--success-color);
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        .expense-form button:hover { background-color: #1e7e34; }
+        
+        /* Currency Sections for Dual Display */
+        .currency-sections-wrapper {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .currency-section {
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .currency-section h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .currency-summary {
+            text-align: right;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--danger-color);
+            padding: 10px 0;
+        }
+        .settlement-summary h2 {
+            color: var(--success-color);
+            border-bottom: 2px solid var(--success-color);
+            padding-bottom: 10px;
+        }
+        .settlement-details {
+            margin-top: 15px;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+        .settlement-details strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #343a3f;
+        }
+        .settlement-details ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .settlement-details li {
+            padding: 5px 0;
+            border-top: 1px dashed #eee;
+        }
+        .settlement-details li:first-child {
+            border-top: none;
+        }
+
+        /* Table Styles */
+        .expense-table-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .expense-table-container th, .expense-table-container td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .expense-table-container th {
+            background-color: var(--bg-color);
+            font-weight: 600;
+        }
+        .expense-table-container td:last-child {
+            text-align: center;
+        }
+        .delete-btn, .settled-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0 5px;
+            line-height: 1;
+        }
+        .delete-btn { color: var(--danger-color); }
+        .settled-btn.active { color: var(--success-color); }
+        .settled-btn:not(.active) { color: var(--secondary-color); }
+        .copy-btn {
+            background-color: #17a2b8;
+            margin-top: 10px;
+            display: block;
+            width: 100%;
+        }
+        .copy-btn:hover { background-color: #138496; }
+
+
+        /* ============================================== */
+        /* --- MOBILE OPTIMIZATION (iPhone Size) --- */
+        /* ============================================== */
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 10px; border-radius: 0; max-width: 100%; }
+            h1 { font-size: 1.8rem; margin-bottom: 15px; }
+            
+            /* Stack tabs and content */
+            .main-content-area { display: block; min-height: auto; }
+
+            /* Horizontal, scrollable tabs */
+            .tabs {
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+                border-right: none;
+                border-bottom: 2px solid var(--border-color); 
+                padding-right: 0;
+                margin-bottom: 10px;
+                overflow-x: auto; 
+                white-space: nowrap; 
+                max-height: 50px; 
+            }
+            .tab-button {
+                flex: 0 0 auto; 
+                border-left: none; 
+                margin-bottom: 0;
+                padding: 10px 12px;
+                font-size: 0.9rem;
+                border-bottom: 3px solid transparent; 
+            }
+            .tab-button.active {
+                border-left: none;
+                border-bottom: 3px solid var(--primary-color); 
+            }
+            .content-area { padding-left: 0; max-height: none; }
+            
+            /* MAP PREVIEW STACKING (Mobile) */
+            .card-content-wrapper {
+                flex-direction: column; 
+            }
+            .map-preview-container {
+                text-align: center;
+                margin-top: 10px;
+                padding-top: 10px;
+                border-top: 1px dashed var(--border-color);
+                width: 100%; 
+                flex-basis: auto;
+            }
+            .map-preview-container img {
+                margin: 0 auto; 
+                height: 150px;
+            }
+            
+            /* Expense Form Stacking */
+            .expense-form input, 
+            .expense-form select {
+                width: 100%; 
+                margin-right: 0;
+                display: block;
+            }
+            .expense-form button { width: 100%; }
+
+            /* Currency Sections Stack */
+            .currency-sections-wrapper {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            /* Adjust table density for mobile */
+            .expense-table-container th, 
+            .expense-table-container td {
+                padding: 8px; 
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🇯🇵 藏王 SNOWBOARD (21-28/2/2026)🏂</h1>
+
+        <div class="main-content-area">
+            <div class="tabs">
+                <button class="tab-button active" data-tab="day1">21/02 (Sat) ✈️</button>
+                <button class="tab-button" data-tab="day2">22/02 (Sun) 🏂</button>
+                <button class="tab-button" data-tab="day3">23/02 (Mon) 👹</button>
+                <button class="tab-button" data-tab="day4">24/02 (Tue) 🦊</button>
+                <button class="tab-button" data-tab="day5">25/02 (Wed) ♨️</button>
+                <button class="tab-button" data-tab="day6">26/02 (Thu) ⛷️</button>
+                <button class="tab-button" data-tab="day7">27/02 (Fri) 🏨</button>
+                <button class="tab-button" data-tab="day8">28/02 (Sat) 🛫</button>
+                <button class="tab-button" data-tab="expenses">💰 Expenses</button>
+            </div>
+
+            <div class="content-area">
+                
+                <div id="day1" class="tab-content active">
+                    <div class="schedule-card" style="border-left: 5px solid var(--success-color);">
+                        <h2>09:00 - 14:00 | Outbound Flight & Arrival</h2>
+                        <div class="card-content-wrapper">
+                            <ul>
+                                <li>**Route:** HKG to Sendai Airport (SDJ) - [<a href="https://maps.app.goo.gl/AdFKd3hMPh9FX1Ph8" target="_blank">📍 Map</a>]</li>
+                                <li>**Flight No.:** UO890 (HK Express)</li>
+                                <li>**Baggage:** 32kg checked bag included.</li>
+                            </ul>
+                            <div class="map-preview-container">
+                                <img src="https://maps.app.goo.gl/AdFKd3hMPh9FX1Ph8" alt="Map Preview: Sendai Airport (SDJ)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="schedule-card">
+                        <h2>15:00 - 15:30 | Car Rental Pickup</h2>
+                        <div class="card-content-wrapper">
+                            <ul>
+                                <li>**Action:** Pick up rental car at SDJ Car Rental Location - [<a href="https://www.google.com/maps/search/Sendai+Airport+Car+Rental" target="_blank">📍 Map</a>]</li>
+                                <li>**Booking Ref:** 202502535063</li>
+                                <li>**Total Cost (JPY):** ¥138,567 (Taxes Incl.)</li>
+                            </ul>
+                            <div class="map-preview-container">
+                                <img src="https://www.google.com/maps/search/Sendai+Airport+Car+Rental" alt="Map Preview: Car Rental">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="schedule-card">
+                        <h2>15:30 - 17:30 | Drive & Check-in</h2>
+                        <div class="card-content-wrapper">
+                            <ul>
+                                <li>**Drive:** From Sendai Airport to Zao Onsen (Approx. <span class="highlight">1 hour 45 min</span>)</li>
+                                <li>**Hotel:** Onsen & Stay OAKHILL - [<a href="https://maps.app.goo.gl/bUHhqom1ruyXBntu8" target="_blank">📍 Map</a>]</li>
+                                <li>**Address:** 756 ZAOONSEN, YAMAGATA</li>
+                            </ul>
+                            <div class="map-preview-container">
+                                <img src="https://maps.app.goo.gl/bUHhqom1ruyXBntu8" alt="Map Preview: Oakhill Hotel">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="day2" class="tab-content">
+                    <div class="schedule-card" style="border-left: 5px solid var(--success-color);">
+                        <h2>09:20 AM | Snowboard Class (Zao SBS)</h2>
+                        <div class="card-content-wrapper">
+                            <ul>
+                                <li>**Meet:** Sports Club MONZA reception desk - [<a href="https://www.google.com/maps/search/Sports+Club+MONZA+Zao+Onsen" target="_blank">📍 Map</a>]</li>
+                                <li>**Payment:** Total ¥95,000, **Pay in cash upon arrival**</li>
+                                <li>**Note:** Location is a 15-min walk from Oakhill.</li>
+                            </ul>
+                            <div class="map-preview-container">
+                                <img src="https://www.google.com/maps/search/Sports+Club+MONZA+Zao+Onsen" alt="Map Preview: Sports Club MONZA">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="schedule-card">
+                        <h2>Afternoon & Evening</h2>
+                        <div class="card-content-wrapper">
+                            <ul>
+                                <li>Buy lift pass on the spot.</li>
+                                <li>Practice riding at Zao Onsen Ski Resort - [<a href="https://www.google.com/maps/search/Zao+Onsen+Ski+Resort" target="_blank">📍 Map</a>]</li>
+                                <li>Relax at the hotel's onsen.</li>
+                            </ul>
+                            <div class="map-preview-container">
+                                <img src="https://www.google.com/maps/search/Zao+Onsen+Ski+Resort" alt="Map Preview: Zao Ski Resort">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="schedule-card" style="border-left: 5px solid #ffc107;">
+                        <h2>🏂 Gear Reminder</h2>
+                        <ul>
+                            <li>**Rent:** Snowboard (SB), shoes, helmet</li>
+                            <li>**Bring your own:** Goggles, socks, snow boots, protectors.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="day3" class="tab-content">
+                    <div class="schedule-card">
+                        <h2>Morning: Free Ride</h2>
+                        <ul>
+                            <li>Free ski/snowboard time. Explore the upper slopes.</li>
+                        </ul>
+                    </div>
+                    <div class="schedule-card" style="border-left: 5px solid var(--primary-color);">
+                        <h2>Afternoon: 藏王樹冰 (Snow Monsters)</h2>
+                        <div class="card-content-wrapper">
+                            <ul>
+                                <li>Take the Zao Ropeway to Jizo Sancho (Summit) - [<a href="https://www.google.com/maps/search/Zao+Ropeway+Zao+Sanroku+Station" target="_blank">📍 Map</a>]</li>
+                            </ul>
+                            <div class="map-preview-container">
+                                <img src="https://www.google.com/maps/search/Zao+Ropeway+Zao+Sanroku+Station" alt="Map Preview: Zao Ropeway">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="schedule-card">
+                        <h2>Evening: Night Juhyo & Onsen</h2>
+                        <div class="card-content-wrapper">
+                            <ul>
+                                <li>View the lit-up Snow Monsters (until 9:00 PM).</li>
+                                <li>Try a public onsen (e.g., 大露天風呂) - [<a href="https://www.google.com/maps/search/蔵王温泉+大露天風呂" target="_blank">📍 Map</a>]</li>
+                            </ul>
+                            <div class="map-preview-container">
+                                <img src="https://www.google.com/maps/search/蔵王温泉+大露天風呂" alt="Map Preview: Dai Rotemburo">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="day4" class="tab-content">
+                    <div class="schedule-card" style="border-left: 5px solid var(--primary-color);">
+                        <h2>Day Activity: 藏王狐狸村 (Fox Village)</h2>
+                        <div class="card-content-wrapper">
+                            <ul>
+                                <li>**Drive Time:** Approx. 1 hour 30 min (from Zao Onsen).</li>
+                                <li>**Times:** 9:00 AM - 4:00 PM (Last entry 3:30 PM)</li>
+                                <li>**Location:** Zao Fox Village - [<a href="https://www.google.com/maps/search/Zao+Fox+Village" target="_blank">📍 Map</a>]</li>
+                                <li>**Note:** <span class="highlight">CASH ONLY.</span> Closed on Wednesday.</li>
+                            </ul>
+                            <div class="map-preview-container">
+                                <img src="https://www.google.com/maps/search/Zao+Fox+Village" alt="Map Preview: Zao Fox Village">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="schedule-card">
+                        <h2>Evening</h2>
+                        <ul>
+                            <li>Drive back to Oakhill.</li>
+                            <li>Dinner and relaxation.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="day5" class="tab-content">
+                    <div class="schedule-card" style="border-left: 5px solid var(--primary-color);">
+                        <h2>Day Activity: Ginzan Onsen</h2>
+                        <div class="card-content-wrapper">
+                            <ul>
+                                <li>**Drive Time:** Approx. 1 hour 30 min to Obanazawa.</li>
+                                <li>**Parking:** Park at Taisho Roman Kan (大正浪漫館) - [<a href="https://www.google.com/maps/search/大正浪漫館+Ginzan+Onsen" target="_blank">📍 Map</a>]</li>
+                                <li>**Shuttle:** Take the shuttle bus from parking (¥500).</li>
+                            </ul>
+                            <div class="map-preview-container">
+                                <img src="https://www.google.com/maps/search/大正浪漫館+Ginzan+Onsen" alt="Map Preview: Ginzan Onsen Parking">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="schedule-card">
+                        <h2>Evening: Logistics</h2>
+                        <ul>
+                            <li>Return to Oakhill.</li>
+                            <li>Start organizing luggage for tomorrow's transfer.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="day6" class="tab-content">
+                    <div class="schedule-card" style="border-left: 5px solid var(--primary-color);">
+                        <h2>Full Day: Snowboarding/Skiing</h2>
+                        <div class="card-content-wrapper">
+                            <ul>
+                                <li>Enjoy a final full day on the Zao slopes - [<a href="https://www.google.com/maps/search/Zao+Onsen+Ski+Resort" target="_blank">📍 Map</a>]</li>
+                                <li>The mountain closes at 5pm.</li>
+                            </ul>
+                            <div class="map-preview-container">
+                                <img src="https://www.google.com/maps/search/Zao+Onsen+Ski+Resort" alt="Map Preview: Zao Ski Resort">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="schedule-card" style="border-left: 5px solid #ffc107;">
+                        <h2>Evening: Final Zao Night</h2>
+                        <ul>
+                            <li>Farewell dinner.</li>
+                            <li>**CRITICAL:** Complete all packing for check-out tomorrow (12:00 PM).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="day7" class="tab-content">
+                    <div class="schedule-card" style="border-left: 5px solid var(--danger-color);">
+                        <h2>Morning & Check-out</h2>
+                        <ul>
+                            <li>Final morning activity (Optional quick run).</li>
+                            <li>**12:00:** Check-out of Onsen & Stay OAKHILL.</li>
+                        </ul>
+                    </div>
+                    <div class="schedule-card" style="border-left: 5px solid var(--primary-color);">
+                        <h2>Afternoon: Drive & Check-in</h2>
+                        <div class="card-content-wrapper">
+                            <ul>
+                                <li>**Drive Time:** Drive to Natori (~1hr 30min).</li>
+                                <li>**15:00:** Check-in at **Super Hotel Mitazono** - [<a href="https://www.google.com/maps/search/Super+Hotel+Mitazono+Sendai+Airport" target="_blank">📍 Map</a>]</li>
+                            </ul>
+                            <div class="map-preview-container">
+                                <img src="https://www.google.com/maps/search/Super+Hotel+Mitazono+Sendai+Airport" alt="Map Preview: Super Hotel Mitazono">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="schedule-card">
+                        <h2>Evening: Preparation</h2>
+                        <ul>
+                            <li>Fill the rental car with gas (must be full for return).</li>
+                            <li>Organize luggage for flight check-in.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="day8" class="tab-content">
+                    <div class="schedule-card" style="border-left: 5px solid var(--success-color);">
+                        <h2>Morning: Check-out & Car Return</h2>
+                        <div class="card-content-wrapper">
+                            <ul>
+                                <li>**10:00:** Check-out of Super Hotel Mitazono.</li>
+                                <li>**12:00:** Return rental car to Sendai Airport (SDJ) Car Rental - [<a href="https://www.google.com/maps/search/Sendai+Airport+Car+Rental" target="_blank">📍 Map</a>]</li>
+                            </ul>
+                            <div class="map-preview-container">
+                                <img src="https://www.google.com/maps/search/Sendai+Airport+Car+Rental" alt="Map Preview: Car Rental">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="schedule-card" style="border-left: 5px solid var(--primary-color);">
+                        <h2>Afternoon: Return Flight</h2>
+                        <div class="card-content-wrapper">
+                            <ul>
+                                <li>**14:55:** Depart Sendai Airport (SDJ) - [<a href="https://maps.app.goo.gl/AdFKd3hMPh9FX1Ph8" target="_blank">📍 Map</a>]</li>
+                                <li>**19:30:** Arrive HKG</li>
+                            </ul>
+                            <div class="map-preview-container">
+                                <img src="https://maps.app.goo.gl/AdFKd3hMPh9FX1Ph8" alt="Map Preview: Sendai Airport">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="expenses" class="tab-content">
+                    <h2>💰 Trip Expenses Tracker</h2>
+                    <p style="font-size: 0.9em; color: var(--danger-color);">**NOTE:** Data is saved in your browser only. Use the "Copy Data" button to paste into a Google Sheet for sharing and calculation!</p>
+                    <div class="expense-form">
+                        <input type="date" id="expense-date" value="2026-02-21" required>
+                        <input type="text" id="expense-item" placeholder="Item/Description" required>
+                        <input type="number" id="expense-amount" placeholder="Amount" required>
+                        <select id="expense-currency" required>
+                            <option value="JPY">JPY (¥)</option>
+                            <option value="HKD">HKD ($)</option>
+                        </select>
+                        <select id="expense-person" required>
+                            <option value="" disabled selected>Person Paid</option>
+                            <option value="yuco">yuco</option>
+                            <option value="HY">HY</option>
+                            <option value="rinjo">rinjo</option>
+                            <option value="fung">fung</option>
+                        </select>
+                        <button onclick="addExpense()">Add Expense</button>
+                    </div>
+
+                    <div class="currency-sections-wrapper">
+                        <div class="currency-section">
+                            <h3>🇯🇵 JPY Expenses (¥)</h3>
+                            <div class="expense-table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Item</th>
+                                            <th>Amount</th>
+                                            <th>Paid By</th>
+                                            <th>Settled</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="expense-list-jpy">
+                                        </tbody>
+                                </table>
+                                <button class="copy-btn" data-currency="JPY" onclick="copyExpensesToClipboard('JPY')">📋 Copy JPY Data (CSV)</button>
+                            </div>
+                            <div class="currency-summary">
+                                Total Unsettled JPY: <span id="unsettled-jpy">¥ 0</span>
+                            </div>
+                        </div>
+
+                        <div class="currency-section">
+                            <h3>🇭🇰 HKD Expenses ($)</h3>
+                            <div class="expense-table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Item</th>
+                                            <th>Amount</th>
+                                            <th>Paid By</th>
+                                            <th>Settled</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="expense-list-hkd">
+                                        </tbody>
+                                </table>
+                                <button class="copy-btn" data-currency="HKD" onclick="copyExpensesToClipboard('HKD')">📋 Copy HKD Data (CSV)</button>
+                            </div>
+                            <div class="currency-summary">
+                                Total Unsettled HKD: <span id="unsettled-hkd">HKD $ 0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settlement-summary">
+                        <h2>⚖️ Who Owes Who (Unsettled Items)</h2>
+                        <div class="settlement-details">
+                            <strong style="color: var(--primary-color);">JPY Settlement Details:</strong>
+                            <div id="jpy-settlement-details"></div>
+                        </div>
+                        <div class="settlement-details">
+                            <strong style="color: var(--primary-color);">HKD Settlement Details:</strong>
+                            <div id="hkd-settlement-details"></div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+        </div>
+
+    </div>
+
+    <script>
+        const expensesKey = 'zao_trip_expenses';
+        const personNames = ['yuco', 'HY', 'rinjo', 'fung'];
+        let expenses = JSON.parse(localStorage.getItem(expensesKey)) || [];
+
+        // --- Tab Switching Logic ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll('.tab-button');
+            const contents = document.querySelectorAll('.tab-content');
+
+            const hash = window.location.hash.substring(1);
+            let defaultTabId = hash || 'day1';
+            
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.getAttribute('data-tab') === defaultTabId) {
+                    tab.classList.add('active');
+                }
+                tab.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-tab');
+                    history.pushState(null, null, '#' + targetId);
+                    
+                    tabs.forEach(t => t.classList.remove('active'));
+                    contents.forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                    document.getElementById(targetId).classList.add('active');
+                    
+                    if (targetId === 'expenses') {
+                        renderExpenses();
+                    }
+                });
+            });
+
+            const initialContent = document.getElementById(defaultTabId);
+            if (initialContent) {
+                initialContent.classList.add('active');
+            } else {
+                document.getElementById('day1').classList.add('active');
+            }
+            
+            // Set default date to today for convenience
+            document.getElementById('expense-date').valueAsDate = new Date();
+            renderExpenses(); 
+        });
+
+
+        // --- Expense Tracker Logic ---
+
+        function saveExpenses() {
+            localStorage.setItem(expensesKey, JSON.stringify(expenses));
+        }
+
+        function addExpense() {
+            const date = document.getElementById('expense-date').value;
+            const item = document.getElementById('expense-item').value.trim();
+            const amount = parseFloat(document.getElementById('expense-amount').value);
+            const currency = document.getElementById('expense-currency').value;
+            const personPaid = document.getElementById('expense-person').value;
+
+            if (!date || !item || isNaN(amount) || amount <= 0 || !personPaid) {
+                alert('Please enter a valid date, item, amount, and select who paid.');
+                return;
+            }
+
+            const newExpense = {
+                id: Date.now(), 
+                date,
+                item,
+                amount: parseFloat(amount.toFixed(2)),
+                currency,
+                personPaid,
+                settled: false 
+            };
+
+            expenses.push(newExpense);
+            saveExpenses();
+            renderExpenses();
+
+            // Clear form
+            document.getElementById('expense-item').value = '';
+            document.getElementById('expense-amount').value = '';
+            document.getElementById('expense-person').value = ''; 
+        }
+
+        function deleteExpense(id) {
+            expenses = expenses.filter(expense => expense.id !== id);
+            saveExpenses();
+            renderExpenses();
+        }
+
+        function toggleSettled(id) {
+            const expense = expenses.find(e => e.id === id);
+            if (expense) {
+                expense.settled = !expense.settled;
+                saveExpenses();
+                renderExpenses();
+            }
+        }
+
+        function renderExpenses() {
+            const listJPY = document.getElementById('expense-list-jpy');
+            const listHKD = document.getElementById('expense-list-hkd');
+            listJPY.innerHTML = '';
+            listHKD.innerHTML = '';
+
+            let totalJPY = 0;
+            let totalHKD = 0;
+
+            expenses.sort((a, b) => new Date(a.date) - new Date(b.date)).forEach(expense => {
+                const isJPY = expense.currency === 'JPY';
+                const list = isJPY ? listJPY : listHKD;
+                const prefix = isJPY ? '¥ ' : 'HKD $ ';
+                
+                if (!expense.settled) {
+                    if (isJPY) {
+                        totalJPY += expense.amount;
+                    } else {
+                        totalHKD += expense.amount;
+                    }
+                }
+
+                const row = list.insertRow();
+                row.insertCell().textContent = expense.date;
+                row.insertCell().textContent = expense.item;
+                
+                const amountCell = row.insertCell();
+                amountCell.textContent = prefix + expense.amount.toLocaleString(undefined, { minimumFractionDigits: isJPY ? 0 : 2 });
+                
+                row.insertCell().textContent = expense.personPaid;
+
+                const settledCell = row.insertCell();
+                const settledButton = document.createElement('button');
+                settledButton.className = 'settled-btn' + (expense.settled ? ' active' : '');
+                settledButton.innerHTML = expense.settled ? '✅' : '❌';
+                settledButton.title = expense.settled ? 'Mark as UNSETTLED' : 'Mark as SETTLED';
+                settledButton.onclick = () => toggleSettled(expense.id);
+                settledCell.appendChild(settledButton);
+
+                const actionCell = row.insertCell();
+                actionCell.innerHTML = `<button class="delete-btn" onclick="deleteExpense(${expense.id})">🗑️</button>`;
+            });
+
+            document.getElementById('unsettled-jpy').textContent = '¥ ' + totalJPY.toLocaleString(undefined, { minimumFractionDigits: 0 });
+            document.getElementById('unsettled-hkd').textContent = 'HKD $ ' + totalHKD.toLocaleString(undefined, { minimumFractionDigits: 2 });
+
+            calculateSettlement('JPY');
+            calculateSettlement('HKD');
+        }
+
+        function calculateSettlement(currency) {
+            const unsettledExpenses = expenses.filter(e => e.currency === currency && !e.settled);
+            const totalAmount = unsettledExpenses.reduce((sum, e) => sum + e.amount, 0);
+            const numPeople = personNames.length;
+            const avgShare = totalAmount / numPeople;
+            const isJPY = currency === 'JPY';
+            const prefix = isJPY ? '¥ ' : 'HKD $ ';
+            const decimalPlaces = isJPY ? 0 : 2;
+
+            const paidBy = {};
+            personNames.forEach(name => paidBy[name] = 0);
+            unsettledExpenses.forEach(e => {
+                paidBy[e.personPaid] += e.amount;
+            });
+
+            // Calculate net balance for each person
+            const balances = {};
+            personNames.forEach(name => {
+                balances[name] = paidBy[name] - avgShare;
+            });
+
+            // Determine transactions (who pays who)
+            let payers = personNames.filter(name => balances[name] < -0.01).sort((a, b) => balances[a] - balances[b]);
+            let receivers = personNames.filter(name => balances[name] > 0.01).sort((a, b) => balances[b] - balances[a]);
+            
+            const transactions = [];
+
+            while (payers.length > 0 && receivers.length > 0) {
+                const payer = payers[0];
+                const receiver = receivers[0];
+                
+                const amountToPay = Math.min(-balances[payer], balances[receiver]);
+                
+                if (amountToPay > 0.01) { 
+                    transactions.push(`${payer} owes ${receiver} ${prefix}${amountToPay.toLocaleString(undefined, { minimumFractionDigits: decimalPlaces, maximumFractionDigits: decimalPlaces })}`);
+                }
+
+                balances[payer] += amountToPay;
+                balances[receiver] -= amountToPay;
+
+                // Remove settled parties
+                if (balances[payer] >= -0.01) { 
+                    payers.shift();
+                }
+                if (balances[receiver] <= 0.01) {
+                    receivers.shift();
+                }
+            }
+
+            const detailsDiv = document.getElementById(`${currency.toLowerCase()}-settlement-details`);
+            
+            if (totalAmount === 0) {
+                detailsDiv.innerHTML = '<p style="color:var(--success-color); font-weight:bold;">All ' + currency + ' expenses are settled or none were entered.</p>';
+            } else {
+                let html = `
+                    <p>Total Unsettled ${currency} Spent: <strong>${prefix}${totalAmount.toLocaleString(undefined, { minimumFractionDigits: decimalPlaces, maximumFractionDigits: decimalPlaces })}</strong></p>
+                    <p>Average Share per Person: <strong>${prefix}${avgShare.toLocaleString(undefined, { minimumFractionDigits: decimalPlaces, maximumFractionDigits: decimalPlaces })}</strong></p>
+                    <ul>
+                `;
+                if (transactions.length > 0) {
+                    transactions.forEach(t => {
+                        html += `<li>${t}</li>`;
+                    });
+                } else {
+                     html += '<li><p style="color:var(--success-color); font-weight:bold;">All individual payments perfectly balanced!</p></li>'
+                }
+                html += '</ul>';
+                detailsDiv.innerHTML = html;
+            }
+        }
+        
+        // --- CSV Export Logic ---
+        function copyExpensesToClipboard(currency) {
+            const filteredExpenses = expenses.filter(e => e.currency === currency);
+            
+            if (filteredExpenses.length === 0) {
+                alert(`No ${currency} expenses to copy!`);
+                return;
+            }
+
+            // Define CSV header
+            let csv = 'Date,Item,Amount,Currency,Paid By,Settled\n';
+
+            // Add expense data
+            filteredExpenses.forEach(expense => {
+                const settledStatus = expense.settled ? 'Yes' : 'No';
+                const row = [
+                    expense.date,
+                    expense.item.replace(/,/g, ' '), 
+                    expense.amount,
+                    expense.currency,
+                    expense.personPaid,
+                    settledStatus
+                ].join(',');
+                csv += row + '\n';
+            });
+
+            // Copy to clipboard
+            navigator.clipboard.writeText(csv).then(() => {
+                alert(`${currency} expenses copied to clipboard successfully! You can now paste this data into a Google Sheet.`);
+            }).catch(err => {
+                console.error('Could not copy text: ', err);
+                alert('Failed to copy to clipboard. Please check console for details.');
+            });
+        }
+    </script>
+</body>
+</html>
